@@ -1,0 +1,7 @@
+Validation performed on Linux with Python 3.12.
+12 pipeline tests passed.
+All project modules parsed and compiled.
+Streamlit AppTest passed: four models, battery changes, noise, upper/early windows, severe loss, augmentation, NASA upload waiting state, precomputed results and robustness model/metric changes.
+Full synthetic benchmark: 4 batteries, 4 clean models, 23 degradation levels, 3 sensor seeds, 4 sweep model variants; 276 aggregate and 1104 battery-fold rows.
+Real NASA loader tested with a MATLAB fixture; real dataset files were not provided.
+Windows launcher not executed on Windows.
