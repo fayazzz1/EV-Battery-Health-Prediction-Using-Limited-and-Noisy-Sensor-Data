@@ -1,0 +1,440 @@
+{
+  "clean_benchmarks": {
+    "Cycle Count Baseline": {
+      "soh_mae": 3.334309192935785,
+      "soh_rmse": 4.347020422447282,
+      "rul_mae": 19.620364847252276,
+      "rul_rmse": 24.550151134694776,
+      "folds": [
+        {
+          "test_battery": "B0005",
+          "soh_mae": 1.171732389767183,
+          "soh_rmse": 1.3967157032359039,
+          "rul_mae": 5.765557718263974,
+          "rul_rmse": 7.3662162034781415
+        },
+        {
+          "test_battery": "B0006",
+          "soh_mae": 4.165897905567858,
+          "soh_rmse": 5.152673682382852,
+          "rul_mae": 17.906797319170753,
+          "rul_rmse": 20.798167324371043
+        },
+        {
+          "test_battery": "B0007",
+          "soh_mae": 5.259588654309107,
+          "soh_rmse": 6.059059184149354,
+          "rul_mae": 31.860770369501232,
+          "rul_rmse": 36.26085310876669
+        },
+        {
+          "test_battery": "B0018",
+          "soh_mae": 2.5779383573253196,
+          "soh_rmse": 2.8370320743668795,
+          "rul_mae": 23.855961927933365,
+          "rul_rmse": 24.71691465675826
+        }
+      ]
+    },
+    "Ridge Regression": {
+      "soh_mae": 0.06522639770179285,
+      "soh_rmse": 0.0860902283176423,
+      "rul_mae": 10.47996670731564,
+      "rul_rmse": 15.03109379395395,
+      "folds": [
+        {
+          "test_battery": "B0005",
+          "soh_mae": 0.060566819617692245,
+          "soh_rmse": 0.07319761174973138,
+          "rul_mae": 4.935267661629077,
+          "rul_rmse": 6.607497007349138
+        },
+        {
+          "test_battery": "B0006",
+          "soh_mae": 0.08123707785733861,
+          "soh_rmse": 0.11490427753822374,
+          "rul_mae": 7.068014826115873,
+          "rul_rmse": 10.372302268573646
+        },
+        {
+          "test_battery": "B0007",
+          "soh_mae": 0.05721432293986509,
+          "soh_rmse": 0.0706979108627358,
+          "rul_mae": 20.013427604767507,
+          "rul_rmse": 24.334295802277396
+        },
+        {
+          "test_battery": "B0018",
+          "soh_mae": 0.06097672658058891,
+          "soh_rmse": 0.07566905296650654,
+          "rul_mae": 9.745844926595868,
+          "rul_rmse": 11.934928299372064
+        }
+      ]
+    },
+    "Random Forest": {
+      "soh_mae": 0.21515467058910157,
+      "soh_rmse": 0.9696871206114532,
+      "rul_mae": 9.609428039403525,
+      "rul_rmse": 14.639054948019405,
+      "folds": [
+        {
+          "test_battery": "B0005",
+          "soh_mae": 0.040038566211162925,
+          "soh_rmse": 0.05331700692420301,
+          "rul_mae": 4.956919427939998,
+          "rul_rmse": 7.614389600641434
+        },
+        {
+          "test_battery": "B0006",
+          "soh_mae": 0.7131565633922601,
+          "soh_rmse": 1.8850507016346416,
+          "rul_mae": 6.070539648268114,
+          "rul_rmse": 10.46682586862183
+        },
+        {
+          "test_battery": "B0007",
+          "soh_mae": 0.031721853510115305,
+          "soh_rmse": 0.03883023241443979,
+          "rul_mae": 18.924090741692126,
+          "rul_rmse": 23.060714732109975
+        },
+        {
+          "test_battery": "B0018",
+          "soh_mae": 0.03766907069389501,
+          "soh_rmse": 0.04936137511544498,
+          "rul_mae": 8.179817148889407,
+          "rul_rmse": 11.936891493972876
+        }
+      ]
+    },
+    "Gradient Boosting": {
+      "soh_mae": 0.22148732874257368,
+      "soh_rmse": 0.9488674841362884,
+      "rul_mae": 9.974583020334622,
+      "rul_rmse": 15.090829477212614,
+      "folds": [
+        {
+          "test_battery": "B0005",
+          "soh_mae": 0.06050219965794025,
+          "soh_rmse": 0.08768383952515385,
+          "rul_mae": 5.628658347532623,
+          "rul_rmse": 8.503182585578818
+        },
+        {
+          "test_battery": "B0006",
+          "soh_mae": 0.6997495988522222,
+          "soh_rmse": 1.8424733138841718,
+          "rul_mae": 6.210245251283314,
+          "rul_rmse": 10.494455476614903
+        },
+        {
+          "test_battery": "B0007",
+          "soh_mae": 0.04162868293595042,
+          "soh_rmse": 0.05302591687455642,
+          "rul_mae": 19.092913976392424,
+          "rul_rmse": 23.34145430725326
+        },
+        {
+          "test_battery": "B0018",
+          "soh_mae": 0.04659106210098405,
+          "soh_rmse": 0.06439226846285186,
+          "rul_mae": 8.691586729528906,
+          "rul_rmse": 13.101697781305395
+        }
+      ]
+    }
+  },
+  "sweeps": {
+    "sampling_interval": [
+      {
+        "step": 1,
+        "label": "1s interval (1x decimation)",
+        "rf_soh_mae": 0.21515467058910223,
+        "rf_rul_mae": 9.609428039403525,
+        "ridge_soh_mae": 0.06522639770179285,
+        "ridge_rul_mae": 10.47996670731564,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      },
+      {
+        "step": 2,
+        "label": "2s interval (2x decimation)",
+        "rf_soh_mae": 0.308979469053261,
+        "rf_rul_mae": 9.789506288126606,
+        "ridge_soh_mae": 0.14087218905297805,
+        "ridge_rul_mae": 11.896419121552603,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      },
+      {
+        "step": 5,
+        "label": "5s interval (5x decimation)",
+        "rf_soh_mae": 0.6795910078020885,
+        "rf_rul_mae": 10.566928112461596,
+        "ridge_soh_mae": 0.4902321575222928,
+        "ridge_rul_mae": 16.09665829057554,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      },
+      {
+        "step": 10,
+        "label": "10s interval (10x decimation)",
+        "rf_soh_mae": 1.2469246738002353,
+        "rf_rul_mae": 11.21232394092481,
+        "ridge_soh_mae": 1.0231657557792913,
+        "ridge_rul_mae": 23.26999203696283,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      },
+      {
+        "step": 20,
+        "label": "20s interval (20x decimation)",
+        "rf_soh_mae": 2.300704063131299,
+        "rf_rul_mae": 13.922697345054853,
+        "ridge_soh_mae": 2.037376268518168,
+        "ridge_rul_mae": 35.96629289529778,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      },
+      {
+        "step": 30,
+        "label": "30s interval (30x decimation)",
+        "rf_soh_mae": 3.162949957580585,
+        "rf_rul_mae": 16.423234913070342,
+        "ridge_soh_mae": 3.0458054591213237,
+        "ridge_rul_mae": 46.551583214897846,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      }
+    ],
+    "sensor_noise": [
+      {
+        "noise_v_std": 0.0,
+        "label": "0 mV noise",
+        "rf_soh_mae": 0.21515467058910157,
+        "rf_rul_mae": 9.609428039403525,
+        "ridge_soh_mae": 0.06522639770179285,
+        "ridge_rul_mae": 10.47996670731564,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      },
+      {
+        "noise_v_std": 0.005,
+        "label": "5 mV noise",
+        "rf_soh_mae": 0.9565124159544812,
+        "rf_rul_mae": 10.865582978412522,
+        "ridge_soh_mae": 2.5996172789221017,
+        "ridge_rul_mae": 41.75476445002854,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      },
+      {
+        "noise_v_std": 0.015,
+        "label": "15 mV noise",
+        "rf_soh_mae": 1.0021460599664667,
+        "rf_rul_mae": 21.84384177752406,
+        "ridge_soh_mae": 8.241068556876177,
+        "ridge_rul_mae": 44.2562893081761,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      },
+      {
+        "noise_v_std": 0.03,
+        "label": "30 mV noise",
+        "rf_soh_mae": 1.5277894100402072,
+        "rf_rul_mae": 27.221820990023655,
+        "ridge_soh_mae": 16.755891029533213,
+        "ridge_rul_mae": 44.2562893081761,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      },
+      {
+        "noise_v_std": 0.05,
+        "label": "50 mV noise",
+        "rf_soh_mae": 2.320483317143643,
+        "rf_rul_mae": 31.46987860110742,
+        "ridge_soh_mae": 27.34517733030378,
+        "ridge_rul_mae": 44.2562893081761,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      },
+      {
+        "noise_v_std": 0.1,
+        "label": "100 mV noise",
+        "rf_soh_mae": 2.7888613681153,
+        "rf_rul_mae": 32.86217390266077,
+        "ridge_soh_mae": 48.624942877155455,
+        "ridge_rul_mae": 44.2562893081761,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      }
+    ],
+    "missing_data": [
+      {
+        "missing_rate": 0.0,
+        "label": "0% missing",
+        "rf_soh_mae": 0.21515467058910126,
+        "rf_rul_mae": 9.609428039403525,
+        "ridge_soh_mae": 0.06522639770179285,
+        "ridge_rul_mae": 10.47996670731564,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      },
+      {
+        "missing_rate": 0.05,
+        "label": "5% missing",
+        "rf_soh_mae": 0.9449752326512099,
+        "rf_rul_mae": 12.097558604768892,
+        "ridge_soh_mae": 0.3854747556637475,
+        "ridge_rul_mae": 51.6485150285093,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      },
+      {
+        "missing_rate": 0.15,
+        "label": "15% missing",
+        "rf_soh_mae": 1.4952888373457536,
+        "rf_rul_mae": 13.704413253252204,
+        "ridge_soh_mae": 0.6743825479418777,
+        "ridge_rul_mae": 85.04779507679419,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      },
+      {
+        "missing_rate": 0.3,
+        "label": "30% missing",
+        "rf_soh_mae": 5.335925960070766,
+        "rf_rul_mae": 32.299611855282826,
+        "ridge_soh_mae": 8.417075298857794,
+        "ridge_rul_mae": 44.2562893081761,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      },
+      {
+        "missing_rate": 0.5,
+        "label": "50% missing",
+        "rf_soh_mae": 5.234435448964702,
+        "rf_rul_mae": 31.782000110004777,
+        "ridge_soh_mae": 8.426806943089995,
+        "ridge_rul_mae": 44.2562893081761,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      },
+      {
+        "missing_rate": 0.7,
+        "label": "70% missing",
+        "rf_soh_mae": 5.071870838442609,
+        "rf_rul_mae": 30.970339641219567,
+        "ridge_soh_mae": 8.159036239363386,
+        "ridge_rul_mae": 45.387042395345176,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      }
+    ],
+    "charging_completeness": [
+      {
+        "charge_window": 1.0,
+        "label": "100% complete",
+        "rf_soh_mae": 0.21515467058910245,
+        "rf_rul_mae": 9.609428039403525,
+        "ridge_soh_mae": 0.06522639770179285,
+        "ridge_rul_mae": 10.47996670731564,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      },
+      {
+        "charge_window": 0.85,
+        "label": "85% complete",
+        "rf_soh_mae": 4.890411266654038,
+        "rf_rul_mae": 32.257807679007215,
+        "ridge_soh_mae": 6.248710250779365,
+        "ridge_rul_mae": 44.2562893081761,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      },
+      {
+        "charge_window": 0.7,
+        "label": "70% complete",
+        "rf_soh_mae": 5.4016455251947635,
+        "rf_rul_mae": 33.936059436051714,
+        "ridge_soh_mae": 15.470372747430138,
+        "ridge_rul_mae": 44.2562893081761,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      },
+      {
+        "charge_window": 0.5,
+        "label": "50% complete",
+        "rf_soh_mae": 6.52058609879596,
+        "rf_rul_mae": 34.09271934768774,
+        "ridge_soh_mae": 33.84022627309986,
+        "ridge_rul_mae": 44.2562893081761,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      },
+      {
+        "charge_window": 0.35,
+        "label": "35% complete",
+        "rf_soh_mae": 6.629589165249108,
+        "rf_rul_mae": 34.24821815371224,
+        "ridge_soh_mae": 56.720224981798474,
+        "ridge_rul_mae": 44.2562893081761,
+        "cycle_baseline_soh_mae": 3.334309192935785,
+        "cycle_baseline_rul_mae": 19.620364847252276
+      }
+    ]
+  },
+  "feature_rankings": [
+    {
+      "feature": "v_mean",
+      "importance_soh": 0.24890882058165123,
+      "importance_rul": 0.09715727154367121
+    },
+    {
+      "feature": "charging_time_sec",
+      "importance_soh": 0.23927199143854708,
+      "importance_rul": 0.014393653167936615
+    },
+    {
+      "feature": "v_std",
+      "importance_soh": 0.20942340992520891,
+      "importance_rul": 0.11214838398557474
+    },
+    {
+      "feature": "coulomb_capacity_ah",
+      "importance_soh": 0.20399305846471683,
+      "importance_rul": 0.05415837805776725
+    },
+    {
+      "feature": "t_rise",
+      "importance_soh": 0.0627542463525063,
+      "importance_rul": 0.20766808038955364
+    },
+    {
+      "feature": "v_skew",
+      "importance_soh": 0.020666383422388766,
+      "importance_rul": 0.1047214359679581
+    },
+    {
+      "feature": "v_trans_time_sec",
+      "importance_soh": 0.012144334494822072,
+      "importance_rul": 0.10406122606882384
+    },
+    {
+      "feature": "v_min",
+      "importance_soh": 0.0028138217723688475,
+      "importance_rul": 0.28965894378058926
+    },
+    {
+      "feature": "v_max",
+      "importance_soh": 1.3013990835751541e-05,
+      "importance_rul": 0.007898661261552573
+    },
+    {
+      "feature": "t_max",
+      "importance_soh": 1.0919556954331136e-05,
+      "importance_rul": 0.008133965776572742
+    }
+  ]
+}
