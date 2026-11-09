@@ -1,0 +1,19 @@
+{
+  "environment": "Chrome cloud browser via managed Sites preview",
+  "url": "http://terminal.local:4173/",
+  "passed": [
+    "NASA live startup with 80.17% SOH and 5.1-cycle RUL at B0005 cycle84",
+    "Cross-battery table matches measured aggregate metrics",
+    "Robustness tab and chart",
+    "Noise RUL tolerance boundary 30mV passing / 50mV failing",
+    "Combined stress and Ridge inference",
+    "B0018 held-out selection",
+    "Augmented model selection",
+    "Cycle132 selection",
+    "Feature tab values and importance",
+    "Data and methodology NASA audit",
+    "Prediction CSV download completed in Chrome",
+    "Experiment JSON download completed in Chrome"
+  ],
+  "scope": "Desktop browser interactions; local Windows presentation laptop remains to be checked"
+}

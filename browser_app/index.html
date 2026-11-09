@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EV Battery Health Lab</title>
+<meta name="description" content="Live battery-health predictions, interactive sensor stress tests and cross-battery evaluation.">
+<link rel="stylesheet" href="./site.css?v=3">
+</head>
+<body>
+<header class="topbar"><div class="brand">⚡ Battery Health <span>Lab</span></div><nav><a href="https://ev-battery-health-lab.shaik-fayaz2467.chatgpt.site/">Public demo</a></nav></header>
+<div class="layout">
+<aside><form id="controls" onsubmit="return false">
+<div class="aside-note eyebrow">Experiment controls</div>
+<label class="field">Held-out battery<select id="battery"><option>B0005</option><option>B0006</option><option>B0007</option><option>B0018</option></select></label>
+<label class="field">Cycle <output id="cycle-label">84</output><input id="cycle" type="range" min="1" max="168" value="84"></label>
+<label class="field">Prediction model<select id="model"><option value="rf">Random Forest</option><option value="ridge">Ridge Regression</option><option value="gb">Gradient Boosting</option><option value="cycle_only">Cycle Count Baseline</option></select></label>
+<label class="field">Training inputs<select id="training"><option value="clean">Clean</option><option value="aug">Clean + degraded</option></select></label>
+<hr><h3>Sensor quality</h3>
+<label class="field">Preset<select id="preset"><option value="clean">Clean measurements</option><option value="noise">Noisy sensors</option><option value="partial">Half charge</option><option value="stress">Combined stress</option><option value="custom">Custom</option></select></label>
+<label class="field">Keep every Nth reading<select id="step"><option>1</option><option>2</option><option>5</option><option>10</option><option>20</option><option>30</option></select></label>
+<label class="field">Voltage noise σ <output id="noise-label">0 mV</output><input id="noise" type="range" min="0" max="100" step="5" value="0"></label>
+<label class="field">Voltage rounding<select id="rounding"><option value="0">None</option><option value="1">1 mV</option><option value="5">5 mV</option><option value="10">10 mV</option><option value="20">20 mV</option><option value="50">50 mV</option></select></label>
+<label class="field">Random missing readings <output id="missing-label">0%</output><input id="missing" type="range" min="0" max="90" step="5" value="0"></label>
+<label class="field">Charge duration retained <output id="window-label">100%</output><input id="window" type="range" min="10" max="100" step="5" value="100"></label>
+<label class="field">Charge segment<select id="segment"><option value="early">Early</option><option value="upper">Upper</option></select></label>
+<label class="field">Sensor seed<input id="seed" type="number" min="0" max="999999" value="42"></label>
+<label class="check"><input id="burst" type="checkbox">Add a consecutive gap</label>
+<p class="aside-note small muted">Noise also affects current and temperature. Models were trained with this battery excluded.</p>
+</form></aside>
+<main>
+<div class="eyebrow">EV battery health · special project</div>
+<h1>What happens when sensor quality drops?</h1>
+<p class="muted">Change the measurements. See the prediction respond.</p>
+<div class="notice"><strong>NASA laboratory measurements.</strong> Four real cells, 633 paired cycles. Results describe this small laboratory dataset; they do not establish real-vehicle or pack safety performance.</div>
+<div id="status" class="status" role="status" aria-live="polite">Loading the battery data and trained models…</div>
+<noscript><div class="error">Enable JavaScript to use the interactive controls.</div></noscript>
+<nav class="tabs" role="tablist" aria-label="Dashboard sections">
+<button type="button" role="tab" id="tab-live" aria-controls="panel-live" aria-selected="true" data-panel="live">Live prediction</button>
+<button type="button" role="tab" id="tab-robustness" aria-controls="panel-robustness" aria-selected="false" data-panel="robustness">Robustness</button>
+<button type="button" role="tab" id="tab-validation" aria-controls="panel-validation" aria-selected="false" data-panel="validation">Cross-battery results</button>
+<button type="button" role="tab" id="tab-features" aria-controls="panel-features" aria-selected="false" data-panel="features">Features</button>
+<button type="button" role="tab" id="tab-method" aria-controls="panel-method" aria-selected="false" data-panel="method">Data & methodology</button>
+</nav>
+<section id="panel-live" role="tabpanel" aria-labelledby="tab-live">
+<div class="row" style="margin-bottom:16px"><h2 id="selection">B0005 · Cycle 84</h2><span id="training-label" class="badge">Battery held out of training</span></div>
+<div class="metrics" aria-live="polite">
+<div class="metric"><div class="label">Predicted SOH</div><div id="soh-value" class="value">—</div><div id="soh-detail" class="detail">State of Health</div></div>
+<div class="metric"><div class="label">Predicted RUL</div><div id="rul-value" class="value">—</div><div id="rul-detail" class="detail">Remaining cycles</div></div>
+<div class="metric"><div class="label">Health grade</div><div id="grade-value" class="value">—</div><div class="detail">Project thresholds: 90% / 80%</div></div>
+<div class="metric"><div class="label">Readings retained</div><div id="retained-value" class="value">—</div><div id="retained-detail" class="detail">Original and degraded inputs</div></div>
+</div>
+<div id="prediction-warning" class="error" hidden></div>
+<div class="panel"><div class="row"><h3>Original vs degraded sensor signal</h3><label class="small">Sensor <select id="signal"><option value="1">Voltage (V)</option><option value="2">Current (A)</option><option value="3">Temperature (°C)</option></select></label></div><div class="legend"><span><i class="swatch" style="background:#94a9b9"></i>Original</span><span><i class="swatch" style="background:#087d8c"></i>Degraded</span></div><div id="signal-chart" class="plot" role="img" aria-label="Original and degraded sensor measurements"><p class="welcome-skeleton">The sensor chart will appear when the data loads.</p></div></div>
+<div class="panel"><h3>Battery lifetime trajectory</h3><div id="trajectory-chart" class="plot" role="img" aria-label="Observed SOH over cycles with selected model prediction"></div><p id="truth" class="small muted"></p></div>
+<div class="row"><button id="download-result" type="button" disabled>Download this prediction</button><span class="small muted">Predictions are calculated from the current controls, using the exported Python-trained models.</span></div>
+</section>
+<section id="panel-robustness" role="tabpanel" aria-labelledby="tab-robustness" hidden>
+<h2>Measured sensitivity to data quality</h2><p class="small muted">Completed Python experiments · 4 held-out batteries · 3 sensor seeds · one factor changed at a time. Live sidebar controls affect the prediction tab.</p>
+<div class="panel"><div class="controls">
+<label class="field">Factor<select id="factor"><option value="sampling_step">Sampling step</option><option value="noise_std_voltage">Sensor noise</option><option value="missing_rate">Missing readings</option><option value="charge_window_pct">Charge completeness</option></select></label>
+<label class="field">Model<select id="sweep-model"><option value="rf">Random Forest</option><option value="ridge">Ridge Regression</option><option value="gb">Gradient Boosting</option><option value="rf_aug">Augmented Random Forest</option></select></label>
+<label class="field">Error metric<select id="metric"><option value="soh_mae">SOH MAE (pp)</option><option value="rul_mae">RUL MAE (cycles)</option><option value="soh_rmse">SOH RMSE (pp)</option><option value="rul_rmse">RUL RMSE (cycles)</option></select></label>
+<label class="field">Tolerance<input id="tolerance" type="number" min="0.1" step="0.1" value="3"></label>
+</div><div class="legend"><span><i class="swatch" style="background:#087d8c"></i>Selected model</span><span><i class="swatch" style="background:#b45309"></i>Cycle-only baseline</span><span><i class="swatch" style="background:#8c6bad"></i>Chosen tolerance</span></div><div id="robustness-chart" class="plot" role="img" aria-label="Prediction error versus sensor degradation"></div><div id="boundary" class="small"></div></div>
+<div id="sweep-table" class="panel table-wrap"></div><p class="small muted">Limits apply only to sampled levels. Variation across sensor seeds is not a confidence interval over independent batteries.</p><button id="download-experiments" type="button">Download experiment JSON</button>
+</section>
+<section id="panel-validation" role="tabpanel" aria-labelledby="tab-validation" hidden><h2>Predicting a battery never seen in training</h2><p class="muted small">Each fold excludes an entire battery. Primary metrics give equal weight to every battery.</p><div id="clean-results" class="panel table-wrap"></div><details><summary>Per-battery results</summary><div id="fold-results" class="panel table-wrap"></div></details></section>
+<section id="panel-features" role="tabpanel" aria-labelledby="tab-features" hidden><h2>Features used by this prediction</h2><div id="current-features" class="panel table-wrap"></div><h3>Held-out permutation importance</h3><div id="importance" class="panel table-wrap"></div><details><summary>Feature-group removal experiments</summary><div id="ablations" class="panel table-wrap"></div></details></section>
+<section id="panel-method" role="tabpanel" aria-labelledby="tab-method" hidden><h2>Data and methodology</h2><div id="audit" class="panel table-wrap"></div><div class="panel"><h3>How the prototype works</h3><p><strong>SOH</strong> is measured discharge capacity divided by initial capacity × 100.</p><p><strong>RUL</strong> is cycles until the first observed SOH ≤ 80%. If retirement is never observed, RUL remains unknown.</p><p>Sensor degradation changes the input features. The target labels remain fixed. Imputation and scaling use training batteries only.</p><p>Live inference uses the exact exported Ridge, Random Forest, Gradient Boosting and cycle-only model parameters. Browser random-noise samples are reproducible within this interface; they use a different random-number generator from NumPy.</p><p>Precomputed robustness results were calculated in Python. For NASA MAT/CSV import, retraining on your own data and new full experiments, run the included Streamlit application.</p><p class="small muted">Cell-level laboratory experiments do not establish pack-level safety or real-vehicle accuracy.</p></div></section>
+<p class="footer">EV Battery Health Lab · 4 NASA laboratory cells · 633 paired cycles · no Python download needed for this dashboard</p>
+</main></div>
+<script type="module" src="./app.mjs?v=3"></script>
+<script>window.addEventListener('error',function(e){var s=document.getElementById('status');if(s){s.dataset.state='error';s.textContent='The dashboard could not finish loading. Please refresh the page. '+(e.message||'A required file could not load.');}});</script>
+</body></html>

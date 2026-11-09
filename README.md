@@ -1,94 +1,69 @@
 # EV Battery Health Prediction Using Limited and Noisy Sensor Data
-### Machine-Learning-Based EV Battery Health & Lifespan Predictor
 
-This repository contains the complete implementation of the **Project Report** and the **Functional Prototype** based on the provided Design Report, Literature Review, and Project Proposal.
+The project estimates battery **state of health (SOH)** and **remaining useful life (RUL)** while sensor readings are noisy, sparse, missing or limited to part of a charge. The final evaluation uses 633 paired cycles across four NASA laboratory cells: B0005, B0006, B0007 and B0018. Models are trained on three cells and tested on the fourth, rotating the held-out cell.
 
----
+[Open the interactive prototype](https://ev-battery-health-lab.shaik-fayaz2467.chatgpt.site/)
 
-## 📁 Project Structure
+## Run the included demonstration
 
-```
-EV-Battery-Health-Prediction-Using-Limited-and-Noisy-Sensor-Data/
-├── .gitignore                # Git ignore rules for cached binaries & virtual environments
-├── requirements.txt          # Python dependencies
-├── PROJECT_REPORT.md         # Comprehensive, publication-grade academic & engineering report
-├── app.py                    # Interactive Streamlit Prototype with real-time sliders & diagnostics
-├── data_loader.py            # NASA PCoE battery dataset generator & loader (B0005, B0006, B0007, B0018)
-├── simulator.py              # 4-factor Data-Quality Simulator (decimation, noise, missing data, partial charge)
-├── features.py               # Feature extraction engine (voltage statistics, delta-T, Coulomb capacity, etc.)
-├── models.py                 # ML models (Cycle Baseline, Ridge, Random Forest, Gradient Boosting) + LOBO
-├── precompute_benchmarks.py  # Script for computing LOBO baselines & multi-level degradation sweeps
-├── run_prototype.bat         # Single-click Windows batch launcher for the Streamlit prototype
-├── README.md                 # Project documentation and quick-start guide
-└── data/
-    ├── nasa_battery_data.pkl # Cached NASA cycle time-series and SOH/RUL labels
-    ├── benchmark_results.pkl # Precomputed LOBO benchmark tables & sweep curves
-    └── benchmark_summary.json# Human-readable JSON summary of experimental results
+**From the submission ZIP:** Extract the entire source folder and install Python 3.12. On Windows, double-click `Start_Browser_Demo.bat`. On any platform, run `python start_browser.py` from the source folder. Open http://127.0.0.1:8765/ if the browser does not open automatically. Keep the terminal running; press Ctrl+C to stop. This mode uses the included browser assets and does not install packages or need internet access. If the port is busy, run `python start_browser.py --port 8766`.
+
+**From GitHub:** Use the live link above for immediate access, or follow the setup and rebuild steps below to generate the browser's data and models locally. The repository contains the implementation and dataset links. The submission ZIP additionally contains raw MAT files, generated browser assets, and measured outputs for offline use.
+
+## Run the Python application
+
+Use Python 3.12. From the project root, create a virtual environment and activate it:
+
+```powershell
+py -3.12 -m venv .venv
+.venv\Scripts\Activate.ps1
 ```
 
----
+On macOS or Linux, use `python3.12 -m venv .venv` and `source .venv/bin/activate`. Then install and run:
 
-## 🚀 Quick Start Guide
-
-### 1. Requirements
-Ensure Python 3.10+ is installed along with the required libraries:
-```bash
-pip install numpy pandas scipy scikit-learn streamlit plotly
+```sh
+python -m pip install -r python_app/requirements.txt
+python -m streamlit run python_app/app.py
 ```
 
-### 2. Launch the Interactive Prototype
-Execute either of the following commands:
-```bash
-streamlit run app.py
+The app opens at http://localhost:8501/. Windows users can also run `Start_Python_App.bat` to create the environment and launch it. Internet access is needed for the first dependency installation. When using the repository rather than the ZIP, install the NASA records first.
+
+## Dataset and provenance
+
+- [NASA PCoE Data Set Repository](https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/)
+- [Battery Data Set ZIP](https://phm-datasets.s3.amazonaws.com/NASA/5.+Battery+Data+Set.zip), B. Saha and K. Goebel, NASA Ames Prognostics Data Repository.
+- `data_source.json` records the source and SHA-256 checksums for the exact four MAT files.
+- The offline submission already contains the data in `python_app/data/raw/`. For a GitHub checkout, download the official ZIP above and run `python research_tools/prepare_nasa_data.py "path/to/Battery Data Set.zip"`. The script checks the four files against their recorded hashes before copying them.
+
+## Reproduce the final experiment
+
+Run from the project root after installing the dependencies and data. The full repeated experiment takes longer than starting the demo.
+
+```sh
+python python_app/precompute_benchmarks.py --source nasa --data-dir python_app/data/raw --output-dir results --repeats 3
+python research_tools/export_browser_models.py --data-dir python_app/data/raw --results-dir results
+python start_browser.py
 ```
-Or simply double-click:
-```cmd
-run_prototype.bat
-```
-The prototype will open automatically in your default web browser at `http://localhost:8501`.
 
----
+To see the recomputed benchmark tables in the Python dashboard, also copy `results/benchmark_summary.json` to `python_app/data/benchmark_summary.json`. To regenerate supplementary analysis and plots, install Matplotlib and run `python research_tools/analyse_results.py`. The supplied numerical and experiment outputs are in `results/` in the submission ZIP.
 
-## 🎯 Key Capabilities of the Prototype
+## Model choices and demo steps
 
-1. **Live Health Prediction & Diagnostics (Tab 1)**:
-   - Select any held-out battery (`B0005`, `B0006`, `B0007`, `B0018`) and any cycle number.
-   - Adjust sensor degradation in real-time to observe the immediate impact on Predicted SOH (%) and Predicted RUL (cycles).
-   - Dynamic **Battery Health Grade Badge**:
-     - 🟢 **GOOD** ($\text{SOH} \ge 90\%$)
-     - 🟡 **MODERATE** ($80\% \le \text{SOH} < 90\%$)
-     - 🔴 **REPLACE SOON** ($\text{SOH} < 80\%$ End-of-Life)
-   - Real-time comparison of pristine laboratory signals vs degraded BMS input signals (Voltage, Current, Temperature).
-   - Lifetime degradation trajectory curve showing the 80% EOL boundary.
+1. Open **Live prediction** and choose battery B0005, cycle 84, and Random Forest.
+2. Compare predicted SOH and RUL with the observed values. Change to Ridge Regression or Gradient Boosting to compare predictions; the Cycle Count Baseline only uses cycle index.
+3. Apply a noise or partial-charge preset and watch the input trace and predictions change. **Clean + degraded** changes the training variant.
+4. Open **Cross-battery results** for held-out scores or **Robustness** for the measured sweep results.
 
-2. **Robustness & Break-Even Analysis (Tab 2)**:
-   - Interactive sweep plots of prediction error (MAE / RMSE) across all 4 degradation factors:
-     1. **Sampling Interval Decimation** (1s to 30s)
-     2. **Sensor Noise & ADC Quantization** (0 to 100 mV)
-     3. **Missing Telemetry Dropout** (0% to 70%)
-     4. **Incomplete Charging Curve Window** (100% down to 35%)
-   - Automated **Break-Even Line** identifying where ML no longer beats the naive cycle-count baseline.
-   - Minimum Data Quality Requirements Table for an engineering tolerance of $\text{MAE} \le 3.0\%$ SOH.
+Ridge has the lowest clean SOH MAE (2.191 percentage points). Random Forest has the lowest all-cycle RUL MAE (9.392 cycles). Gradient Boosting has the lowest pre-retirement RUL MAE (17.330 cycles). The experiments are on four lab cells; they do not establish pack or vehicle accuracy.
 
-3. **Leave-One-Battery-Out (LOBO) Benchmark (Tab 3)**:
-   - 4-Fold cross-validation metrics across all four cells complying with **Barua et al. (2026)** to prevent cell-overlap data leakage.
-   - Comparison across Cycle-Count Baseline, Ridge Regression, Gradient Boosting, and Random Forest.
+## Source layout and checks
 
-4. **Feature Importance & Sensitivity (Tab 4)**:
-   - Gini importance rankings for all 11 health indicator features.
-   - Analysis of noise-resilient features (thermal dynamics) vs noise-sensitive features (Coulomb integration under partial charging).
+| Path | Purpose |
+| --- | --- |
+| `python_app/` | Streamlit interface, data import, features, perturbations, training and benchmarks |
+| `browser_app/` | HTML, CSS, JavaScript prediction engine and generated browser assets |
+| `research_tools/` | Dataset preparation, browser export and supplementary analysis |
+| `results/` | Benchmark results, audit, predictions and verification records (full set in submission ZIP) |
+| `browser_tests/` | Python/browser parity fixtures (submission ZIP) |
 
-5. **System Design & Methodology (Tab 5)**:
-   - Complete mathematical formulations for SOH, RUL, MAE, RMSE, and the LOBO evaluation pipeline.
-
----
-
-## 📊 Summary of Experimental Results
-
-- **Cycle-Count Baseline**: SOH MAE = 3.33%, RUL MAE = 19.6 cycles.
-- **Random Forest (Clean Lab)**: SOH MAE = **0.215%**, RUL MAE = **9.6 cycles** (**93.5% error reduction** over baseline).
-- **Minimum Data Quality Thresholds** (for $\text{SOH MAE} \le 3.0\%$):
-  - Sampling interval: $\le 15\text{ s}$
-  - Sensor noise: $\le 40\text{ mV}$ std dev
-  - Missing data: $\le 35\%$ dropout
-  - Charging completeness: $\ge 50\%$ retained curve
+Run `python -m pytest python_app/test_pipeline.py -q`. From the submission source folder, run `node browser_tests/browser_numerics.mjs` with Node.js for browser numerical checks. The report explains the methodology and limitations.

@@ -1,40 +1,8 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
-
-# C extensions
-*.so
-
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Virtual Environments
-venv/
 .venv/
-env/
-ENV/
-
-# IDE & OS files
-.vscode/
-.idea/
-.DS_Store
-Thumbs.db
-
-# Large dataset cache (Auto-generated on first run by data_loader.py; ~119MB)
-data/nasa_battery_data.pkl
+__pycache__/
+.pytest_cache/
+*.py[cod]
+python_app/data/raw/*.mat
+python_app/data/benchmark_summary.json
+browser_app/data/
+assets/

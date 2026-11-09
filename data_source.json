@@ -1,0 +1,68 @@
+{
+  "source_url": "https://phm-datasets.s3.amazonaws.com/NASA/5.+Battery+Data+Set.zip",
+  "source_page": "https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/",
+  "retrieved_date": "2026-11-06",
+  "archive_sha256": "82302a7db4fc1b34e0b6676326610438d43b816bdf11a69d1d012a464ef2f92e",
+  "cells": [
+    {
+      "battery_id": "B0005",
+      "source_records": 616,
+      "charges": 170,
+      "discharges": 168,
+      "paired_cycles": 167,
+      "first_capacity_ah": 1.8564874208181574,
+      "last_capacity_ah": 1.3250793286429356,
+      "min_soh": 69.34884167276275,
+      "eol_cycle": 101,
+      "sensor_rows": 539314,
+      "median_interval_s": 2.905999999999949,
+      "nonpositive_dt": 0,
+      "sha256": "0eae4585baf3f200c09fe24c5ab884f1889679fc75206ca1aa19da704104f0b0"
+    },
+    {
+      "battery_id": "B0006",
+      "source_records": 616,
+      "charges": 170,
+      "discharges": 168,
+      "paired_cycles": 167,
+      "first_capacity_ah": 2.035337591005598,
+      "last_capacity_ah": 1.1856752327929356,
+      "min_soh": 56.68928519254556,
+      "eol_cycle": 61,
+      "sensor_rows": 539314,
+      "median_interval_s": 2.905999999999949,
+      "nonpositive_dt": 0,
+      "sha256": "fa818ab4db5db8ab21e910b6dd6c3e20d3761bb9672089e1a4de8f96074616c5"
+    },
+    {
+      "battery_id": "B0007",
+      "source_records": 616,
+      "charges": 170,
+      "discharges": 168,
+      "paired_cycles": 167,
+      "first_capacity_ah": 1.89105229539079,
+      "last_capacity_ah": 1.4324552720625434,
+      "min_soh": 74.05692816217145,
+      "eol_cycle": 124,
+      "sensor_rows": 539314,
+      "median_interval_s": 2.905999999999949,
+      "nonpositive_dt": 0,
+      "sha256": "d022afa086efaf54ab5b63f05220f5be178c8027e2fa8d68589db0e85a441a3b"
+    },
+    {
+      "battery_id": "B0018",
+      "source_records": 319,
+      "charges": 134,
+      "discharges": 132,
+      "paired_cycles": 132,
+      "first_capacity_ah": 1.8550045207910817,
+      "last_capacity_ah": 1.341051440640485,
+      "min_soh": 72.2937020158087,
+      "eol_cycle": 75,
+      "sensor_rows": 276638,
+      "median_interval_s": 4.812000000001717,
+      "nonpositive_dt": 0,
+      "sha256": "d1e6c923a43ea1c9666b3a90bbb521757a067fd60b4d17dbfaa49c50b179da69"
+    }
+  ]
+}

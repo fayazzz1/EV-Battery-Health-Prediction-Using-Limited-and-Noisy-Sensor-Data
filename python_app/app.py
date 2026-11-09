@@ -36,8 +36,11 @@ def imported(files,source):
     return ds
 
 st.sidebar.title('Experiment controls')
-source=st.sidebar.selectbox('Data source',['Synthetic demonstration','NASA MAT files','Normalized sensor CSV'])
-if source=='Synthetic demonstration':
+source=st.sidebar.selectbox('Data source',['Included NASA measurements','Synthetic demonstration','NASA MAT files','Normalized sensor CSV'])
+if source=='Included NASA measurements':
+    dataset=load_battery_data(source='nasa',data_dir=Path(__file__).parent/'data'/'raw')
+    st.info('Original NASA PCoE measurements: four laboratory cells and 633 paired cycles. Results are descriptive and do not certify real-vehicle performance.')
+elif source=='Synthetic demonstration':
     dataset=synthetic()
     st.warning('Synthetic demonstration: generated signals encode simulated ageing. Accuracy here is a software check, not evidence of NASA or real-EV performance.')
 else:
@@ -202,5 +205,5 @@ with tab_method:
     st.write('C₀ is the first measured discharge capacity. EOL is the first observed cycle with SOH ≤ 80%. Labels come from the original capacity trajectory and never change when sensors are degraded.')
     st.write('Pipeline: import → charge/discharge pairing → fixed labels → sensor degradation → charge features → fold-local imputation and scaling → SOH/RUL models → battery-disjoint evaluation → robustness limits.')
     st.write('Sampling is decimation by reading index, not a fixed number of seconds. Noise, rounding, random loss, burst loss and early/upper charge windows have separate live controls. Published sweeps isolate the four core factors; the noise sweep does not add rounding or bursts.')
-    st.write('The proposal, literature review and design report motivate the four models, cross-battery validation, controlled degradation, augmentation, and feature comparisons. NASA is supported through original MAT files; CALCE needs conversion to the normalized CSV schema. No real dataset was included with the supplied prototype.')
+    st.write('The proposal, literature review and design report motivate the four models, cross-battery validation, controlled degradation, augmentation, and feature comparisons. NASA is supported through original MAT files; CALCE needs conversion to the normalized CSV schema. The final package includes the original NASA MATLAB files and measured experiment results. CALCE remains an extension.')
     st.caption('Lab cells and simulated telemetry loss do not establish field performance. Few independent batteries limit generalization. Thresholds and health grades are research choices.')
